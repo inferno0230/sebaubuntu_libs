@@ -25,9 +25,10 @@ def get_files_list(path: Path) -> List[Path]:
 	for i in path.iterdir():
 		if i.is_file():
 			files.append(i)
-		else:
-			files.extend(get_files_list(i))
-
+		elif i.is_dir():
+            		files.extend(get_files_list(i))
+        	elif i.is_symlink() and i.exists():  # Check if the symlink exists
+            		files.append(i)
 	return files
 
 class AndroidPartition:
